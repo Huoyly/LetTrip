@@ -16,16 +16,19 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.lettrip.ui.theme.EmeraldGreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToolAppBar(
     titleBar: String,
     containerColor: Color = MaterialTheme.colorScheme.primary,
+    contentColor: Color = Color.Unspecified,
     modifier: Modifier = Modifier,
     leftIcon: ImageVector? = null,
     onLeftClick: () -> Unit = {},
@@ -36,33 +39,36 @@ fun ToolAppBar(
     rightBadgeCount: Int? = null,
     scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
+    val resolvedContentColor = when {
+        contentColor != Color.Unspecified -> contentColor
+        containerColor == Color.Transparent -> MaterialTheme.colorScheme.onBackground
+        containerColor.luminance() > 0.5f -> Color.Black
+        else -> Color.White
+    }
+
     CenterAlignedTopAppBar(
-        modifier = modifier,
-        title = {
+        modifier = modifier, title = {
             Text(
                 text = titleBar,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-        },
-        navigationIcon = {
+        }, navigationIcon = {
             if (leftIcon != null) {
                 BarIconButton(leftIcon, leftDescription, null, onLeftClick)
             }
-        },
-        actions = {
+        }, actions = {
             if (rightIcon != null) {
                 BarIconButton(rightIcon, rightDescription, rightBadgeCount, onRightClick)
             }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary,
-            navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-            actionIconContentColor = MaterialTheme.colorScheme.onPrimary
-        ),
-        scrollBehavior = scrollBehavior
+        }, colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = containerColor,
+            scrolledContainerColor = containerColor,
+            titleContentColor = resolvedContentColor,
+            navigationIconContentColor = resolvedContentColor,
+            actionIconContentColor = resolvedContentColor
+        ), scrollBehavior = scrollBehavior
     )
 }
 
@@ -116,7 +122,8 @@ private fun RightIconPreview() {
         ToolAppBar(
             titleBar = "Home",
             leftIcon = null,
-            rightIcon = Icons.Default.Search
+            rightIcon = Icons.Default.Search,
+            containerColor = EmeraldGreen
         )
     }
 }
@@ -129,7 +136,8 @@ private fun NoIconPreview() {
         ToolAppBar(
             titleBar = "Home",
             leftIcon = null,
-            rightIcon = null
+            rightIcon = null,
+            containerColor = Color.Transparent
         )
     }
 }
