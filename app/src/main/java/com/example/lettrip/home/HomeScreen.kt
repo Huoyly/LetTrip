@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.lettrip.common.component.ToolAppBar
+import com.example.lettrip.ui.theme.EmeraldGreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, name = "Home Screen")
@@ -26,6 +27,7 @@ fun HomeScreen() {
                 titleBar = "Home",
                 leftIcon = Icons.Default.Person,
                 rightIcon = Icons.Default.Search,
+                containerColor = EmeraldGreen
             )
         }
     ) { padding ->
