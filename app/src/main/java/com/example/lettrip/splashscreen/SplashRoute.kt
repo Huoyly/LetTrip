@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
-import com.example.lettrip.data.SessionRepository
+import com.example.lettrip.model.SessionRepository
 
 @Composable
 fun SplashRoute(
