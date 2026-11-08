@@ -1,6 +1,6 @@
 package com.example.lettrip.splashscreen
 
-import com.example.lettrip.data.SessionRepository
+import com.example.lettrip.model.SessionRepository
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

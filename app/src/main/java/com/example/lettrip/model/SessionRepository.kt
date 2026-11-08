@@ -1,4 +1,4 @@
-package com.example.lettrip.data
+package com.example.lettrip.model
 
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
